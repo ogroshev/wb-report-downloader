@@ -62,8 +62,8 @@ func recognizeReportVersion(headers []string) (any, error) {
 
 func compareHeadersWithReportType(headers []string, structType any) (matched bool, notFoundCols []string, newCols []string) {
 	f := structFieldsWithTagXlsx(structType)
-	notFoundCols = slice.Difference(headers, f)
-	newCols = slice.Difference(f, headers)
+	notFoundCols = slice.Difference(f, headers)
+	newCols = slice.Difference(headers, f)
 	if len(notFoundCols) == 0 && len(newCols) == 0 {
 		return true, nil, nil
 	}

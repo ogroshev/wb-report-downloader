@@ -16,6 +16,8 @@ func TestParseReportDetailesXlsx(t *testing.T) {
 		kTestDataDir + "v1.xlsx", 
 		kTestDataDir + "v2.xlsx", 
 		kTestDataDir + "v3.xlsx",
+		kTestDataDir + "v4.xlsx",
+		kTestDataDir + "v5.xlsx",
 	}
 
 	for _, file := range testFiles {
@@ -51,6 +53,7 @@ var vRecognizerTests = []versionRecognizerTest{
 	{kTestDataDir + "v1.xlsx", ReportRowV1{}},
 	{kTestDataDir + "v2.xlsx", ReportRowV2{}},
 	{kTestDataDir + "v3.xlsx", ReportRowV3{}},
+	{kTestDataDir + "v4.xlsx", ReportRowV4{}},
 }
 
 func TestVersionRecognizer(t *testing.T) {
