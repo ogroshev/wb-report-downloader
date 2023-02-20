@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"strings"
 	"wb-report-downloader/internal/detreport"
 	"wb-report-downloader/pkg/client/postgresql"
 )
@@ -75,7 +76,8 @@ func makeDataRow(rv reflect.Value) string {
 	for i := 0; i < rv.NumField(); i++ {
 		value := fmt.Sprintf("%v", rv.Field(i).Interface())
 		if rv.Field(i).Type().Kind() == reflect.String {
-			row += "'" + value + "'"
+			v := strings.ReplaceAll(value, "'", "''")
+			row += "'" + v + "'"
 		} else {
 			row += value
 		}
