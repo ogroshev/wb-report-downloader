@@ -104,7 +104,7 @@ func handleSeller(seller seller.Seller, postgres postgresql.Client) {
 
 	newReportsIds := slice.Difference(allReportsIds, foundIds)
 
-	log.Printf("[%d][err] newReports: %v\n", seller.ID, newReportsIds)
+	log.Printf("[%d] newReports: %v\n", seller.ID, newReportsIds)
 
 	reportsForSave := report.GetReportsByIds(r, newReportsIds)
 
