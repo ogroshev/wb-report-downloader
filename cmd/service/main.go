@@ -13,11 +13,11 @@ import (
 )
 
 func main()  {
-	postgreSQLClient := start()
-	service.Serve(postgreSQLClient)
+	postgreSQLClient, sleepIntervalSec := start()
+	service.Serve(postgreSQLClient, sleepIntervalSec)
 }
 
-func start() *pgxpool.Pool {
+func start() (*pgxpool.Pool, uint) {
 	log.Printf("Report downloader\n")
 
 	log.Printf("Reading config...")
@@ -35,5 +35,5 @@ func start() *pgxpool.Pool {
 	}
 	log.Printf("Connecting database... OK\n")
 
-	return postgreSQLClient
+	return postgreSQLClient, c.SleepOnTaskNotFoundSec
 }

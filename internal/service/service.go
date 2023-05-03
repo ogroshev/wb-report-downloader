@@ -19,15 +19,16 @@ import (
 	"wb-report-downloader/pkg/slice"
 )
 
-func Serve(client postgresql.Client) {
+func Serve(client postgresql.Client, sleepIntervalSec uint) {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
-	tiker := time.NewTicker(24 * time.Hour)
+	tiker := time.NewTicker(time.Duration(sleepIntervalSec) * time.Second)
 
 	for {
 		downloadReports(client)
 		downloadDetailedReports(client)
+		log.Printf("Sleep for %v secs\n", sleepIntervalSec)
 		select {
 		case <-tiker.C:
 			continue
