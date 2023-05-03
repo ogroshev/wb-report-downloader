@@ -43,7 +43,7 @@ func main()  {
 	log.Printf("Getting cookies... OK\n")
 
 	log.Printf("Sending http request 'report'... \n")
-	r := wb_request.GetReports(cookies.RawCookies)
+	r := wb_request.GetReports(cookies.XSupplierID, cookies.WBToken)
 	log.Printf("Http request ... OK \n")
 
 	allReportsIds := report.GetReportIds(r)

@@ -21,7 +21,7 @@ type ArchivedExcelResponse struct {
 	} `json:"data"`
 }
 
-func GetDetailedReport(reportID uint64, rawCookies string) []byte {
+func GetDetailedReport(reportID uint64, XSupplierID string, WBToken string) []byte {
 	url := fmt.Sprintf(kGetDetailedReportUrl, reportID)
 	log.Printf("url: %v\n", url)
 	req, err := http.NewRequest("GET", url, nil)
@@ -29,7 +29,8 @@ func GetDetailedReport(reportID uint64, rawCookies string) []byte {
 		log.Fatalf("http.NewRequest: %v\n", err)
 	}
 
-	req.Header.Add("Cookie", rawCookies)
+	req.AddCookie(&http.Cookie{Name: "WBToken", Value: WBToken})
+	req.AddCookie(&http.Cookie{Name: "x-supplier-id", Value: XSupplierID})
 
 	client := &http.Client{}
 	response, err := client.Do(req)
@@ -56,12 +57,13 @@ func GetDetailedReport(reportID uint64, rawCookies string) []byte {
 	return ziptool.Unbase64(archivedExcelResponse.Data.File)
 }
 
-func GetReports(rawCookies string) report.ReportsResponse {
+func GetReports(XSupplierID, WBToken string) report.ReportsResponse {
 	req, err := http.NewRequest("GET", kGetReportsUrl, nil)
 	if err != nil {
 		log.Fatalf("http.NewRequest: %v\n", err)
 	}
-	req.Header.Add("Cookie", rawCookies)
+	req.AddCookie(&http.Cookie{Name: "WBToken", Value: WBToken})
+	req.AddCookie(&http.Cookie{Name: "x-supplier-id", Value: XSupplierID})
 
 	q := req.URL.Query()
 	q.Add("limit", "108")
